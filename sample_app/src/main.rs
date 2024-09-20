@@ -1,30 +1,14 @@
 fn main() {
-    let input = String::from("1211");
-    println!(
-        "It is {:?} that the given string is palindrome",
-        palindrome(input)
-    );
-}
+    let mut first_num = 42;
+    let mut second_num = 64;
+    let ref1 = &mut first_num;
+    let mut ref2 = &mut second_num; // a mutable references means that the reference can be updated to point to some other variable
 
-fn palindrome(input: String) -> bool {
-    let mut is_palindrome = true;
-    if input.len() == 0 {
-        is_palindrome = true;
-    } else {
-        let mut last = input.len() - 1;
-        let mut first = 0;
+    *ref1 = 15;
+    *ref2 = 10;
+    *ref1 = 5;
 
-        let my_vec = input.as_bytes();
+    ref2 = ref1;
 
-        while first < last {
-            if my_vec[first] != my_vec[last] {
-                is_palindrome = false;
-                break;
-            }
-
-            first += 1;
-            last -= 1;
-        }
-    }
-    is_palindrome
+    println!("Updated first number: {ref2}");
 }
