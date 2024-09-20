@@ -1,14 +1,38 @@
+struct Student {
+    name: String,
+    grade: Option<u32>,
+}
+
+fn check(name: &String, student_db: &Vec<Student>) -> Option<u32> {
+    for student in student_db {
+        if *name == student.name {
+            return student.grade;
+        }
+    }
+    None
+}
+
 fn main() {
-    let mut first_num = 42;
-    let mut second_num = 64;
-    let ref1 = &mut first_num;
-    let mut ref2 = &mut second_num; // a mutable references means that the reference can be updated to point to some other variable
+    let student_db = vec![
+        Student {
+            name: "Bob".to_string(),
+            grade: Some(56),
+        },
+        Student {
+            name: "Alice".to_string(),
+            grade: Some(87),
+        },
+        Student {
+            name: String::from("Charlie"),
+            grade: None,
+        },
+    ];
 
-    *ref1 = 15;
-    *ref2 = 10;
-    *ref1 = 5;
+    let name = "Charlie".to_string();
 
-    ref2 = ref1;
+    let student_grade = check(&name, &student_db);
 
-    println!("Updated first number: {ref2}");
+    if let Some(grade) = student_grade {
+        println!("Grade is {grade}");
+    }
 }
