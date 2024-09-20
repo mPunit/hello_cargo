@@ -1,38 +1,31 @@
-struct Student {
-    name: String,
-    grade: Option<u32>,
+struct Item {
+    id: i32,
+    title: String,
+    year: i32,
+    type_: ItemType,
+}
+#[derive(Debug)]
+enum ItemType {
+    Book,
+    Magazine,
 }
 
-fn check(name: &String, student_db: &Vec<Student>) -> Option<u32> {
-    for student in student_db {
-        if *name == student.name {
-            return student.grade;
-        }
+impl Item {
+    fn display_item_info(&self) {
+        println!(
+            "The id is {}, title is {}, year is {}, type is {:#?}",
+            self.id, self.title, self.year, self.type_
+        );
     }
-    None
 }
 
 fn main() {
-    let student_db = vec![
-        Student {
-            name: "Bob".to_string(),
-            grade: Some(56),
-        },
-        Student {
-            name: "Alice".to_string(),
-            grade: Some(87),
-        },
-        Student {
-            name: String::from("Charlie"),
-            grade: None,
-        },
-    ];
+    let book1 = Item {
+        id: 12,
+        title: "harry".to_string(),
+        year: 2005,
+        type_: ItemType::Book,
+    };
 
-    let name = "Charlie".to_string();
-
-    let student_grade = check(&name, &student_db);
-
-    if let Some(grade) = student_grade {
-        println!("Grade is {grade}");
-    }
+    book1.display_item_info();
 }
