@@ -1,3 +1,5 @@
+use sample_app::{Car, Price, Vehicle};
+
 struct Item {
     id: i32,
     title: String,
@@ -28,4 +30,9 @@ fn main() {
     };
 
     book1.display_item_info();
+    let price: Price = Price::new(38000);
+    let vehicle = Vehicle::new("Hyundai".to_string(), "Elantra".to_string(), 2023, price);
+    let car = Car::new(vehicle);
+
+    println!("The car details are: {:?}", car);
 }
