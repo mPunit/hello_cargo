@@ -7,7 +7,7 @@ struct Item {
 #[derive(Debug)]
 enum ItemType {
     Book,
-    Magazine,
+    _Magazine,
 }
 
 impl Item {
