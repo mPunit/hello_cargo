@@ -1,4 +1,4 @@
-use sample_app::{price, Bus, Car};
+use sample_app::{price, return_bus, year, Bus, Car};
 
 fn main() {
     let car = Car::new("Elantra".to_string(), 2023, 2000);
@@ -7,4 +7,7 @@ fn main() {
 
     println!("Price of the car is {}", car.calculate_price());
     println!("Price of the bus is {}", bus.calculate_price());
+
+    year(car);
+    return_bus();
 }
