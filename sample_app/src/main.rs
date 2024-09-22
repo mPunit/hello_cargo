@@ -1,38 +1,10 @@
-use sample_app::{Car, Price, Vehicle};
-
-struct Item {
-    id: i32,
-    title: String,
-    year: i32,
-    type_: ItemType,
-}
-#[derive(Debug)]
-enum ItemType {
-    Book,
-    _Magazine,
-}
-
-impl Item {
-    fn display_item_info(&self) {
-        println!(
-            "The id is {}, title is {}, year is {}, type is {:#?}",
-            self.id, self.title, self.year, self.type_
-        );
-    }
-}
+use sample_app::{price, Bus, Car};
 
 fn main() {
-    let book1 = Item {
-        id: 12,
-        title: "harry".to_string(),
-        year: 2005,
-        type_: ItemType::Book,
-    };
+    let car = Car::new("Elantra".to_string(), 2023, 2000);
 
-    book1.display_item_info();
-    let price: Price = Price::new(38000);
-    let vehicle = Vehicle::new("Hyundai".to_string(), "Elantra".to_string(), 2023, price);
-    let car = Car::new(vehicle);
+    let bus = Bus::new(50, 2021, 25000);
 
-    println!("The car details are: {:?}", car);
+    println!("Price of the car is {}", car.calculate_price());
+    println!("Price of the bus is {}", bus.calculate_price());
 }
