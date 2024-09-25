@@ -1,78 +1,46 @@
-// ----------------------------------------------
-// 		Associated Types in Traits
-// ----------------------------------------------
+// -------------------------------------------
+// 			Closures
+// -------------------------------------------
 
-#[derive(Debug)]
-struct Km {
-    value: u32,
+struct User {
+    name: String,
+    age: u8,
+    salary: u32,
 }
 
-#[derive(Debug)]
-struct Kmh {
-    value: u32,
-}
-
-#[derive(Debug)]
-struct Miles {
-    value: u32,
-}
-
-#[derive(Debug)]
-struct Mph {
-    value: u32,
-}
-
-// impl Kmh {
-//     fn distance_in_three_hours(&self) -> Km {
-//         Km {
-//             value: self.value * 3,
-//         }
-//     }
+// fn validate_user(name: &str) -> bool {
+//     name.len() != 0
 // }
 
-// impl Mph {
-//     fn distance_in_three_hours(&self) -> Miles {
-//         Miles {
-//             value: self.value * 3,
-//         }
-//     }
-// }
-
-trait DistanceThreeHours {
-    type Distance;
-    fn distance_in_three_hours(&self) -> Self::Distance;
-}
-
-impl DistanceThreeHours for Kmh {
-    type Distance = Km;
-    fn distance_in_three_hours(&self) -> Self::Distance {
-        Self::Distance {
-            value: self.value * 3,
-        }
-    }
-}
-
-impl DistanceThreeHours for Mph {
-    type Distance = Miles;
-    fn distance_in_three_hours(&self) -> Self::Distance {
-        Self::Distance {
-            value: self.value * 3,
-        }
-    }
+fn is_valid_user<V1, V2>(name: &str, age: u8, simple_validator: V1, advance_validator: V2) -> bool
+where
+    V1: FnOnce(&str) -> bool,
+    V2: Fn(u8) -> bool,
+{
+    simple_validator(name) && advance_validator(age)
 }
 fn main() {
-    let speed_Kmh = Kmh { value: 90 };
-    let distance_Km = speed_Kmh.distance_in_three_hours();
+    let person_1 = User {
+        name: String::from("someone"),
+        age: 35,
+        salary: 40_000,
+    };
 
-    println!(
-        "At {:?}, you will travel {:?} in 3 hours",
-        speed_Kmh, distance_Km
-    );
+    let banned_user = String::from("banned user");
+    let validate_user_simple = move |name: &str| {
+        let banned_user_name = &banned_user;
+        name.len() != 0 && name != banned_user_name
+    };
+    //println!("{banned_user}");
 
-    let speed_Mph = Mph { value: 90 };
-    let distance_Miles = speed_Mph.distance_in_three_hours();
+    let validate_user_advance = |age: u8| age >= 30;
     println!(
-        "At {:?}, you will travel {:?}, in 3 hours",
-        speed_Mph, distance_Miles
+        "User validity {}",
+        is_valid_user(
+            &person_1.name,
+            person_1.age,
+            validate_user_simple,
+            validate_user_advance
+        )
     );
 }
