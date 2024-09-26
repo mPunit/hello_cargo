@@ -1,55 +1,19 @@
-// -------------------------------------------
-// 			Iterator
-// -------------------------------------------
-
-// trait Iterator {
-//     type Item;
-//     fn next(&mut self) -> Option<Self::Item>;
-// }
-#[derive(Debug)]
-struct Employee {
-    name: String,
-    salary: u16,
-}
-
-#[derive(Debug)]
-struct Employee_Records {
-    employee_db: Vec<Employee>,
-}
-
-impl Iterator for Employee_Records {
-    type Item = String;
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.employee_db.len() != 0 {
-            let result = self.employee_db[0].name.clone();
-            self.employee_db.remove(0);
-            Some(result)
-        } else {
-            None
-        }
-    }
-}
+use core::num;
 
 fn main() {
-    let emp_1 = Employee {
-        name: String::from("John"),
-        salary: 40_000,
-    };
+    let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let mut result = 0;
 
-    let emp_2 = Employee {
-        name: String::from("Joseph"),
-        salary: 30_000,
-    };
+    let result: i32 = numbers
+        .iter()
+        .filter(|&&num| num % 2 == 0)
+        .map(|&num| num * num)
+        .sum();
 
-    let emp_db = Employee_Records {
-        employee_db: vec![emp_1, emp_2],
-    };
+    println!("Result without combinators: {}", result);
 
-    // println!("{:?}", emp_db.next());
-    // println!("{:?}", emp_db.next());
-    // println!("{:?}", emp_db.next());
+    let a = &numbers;
+    let b = &a;
 
-    for employee in emp_db {
-        println!("{employee}");
-    }
+    println!("{:?}", &a)
 }
