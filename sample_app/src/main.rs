@@ -1,19 +1,23 @@
-use core::num;
-
+// FIX the errors
 fn main() {
-    let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let mut result = 0;
+    let mut v = vec![1, 2, 3];
 
-    let result: i32 = numbers
-        .iter()
-        .filter(|&&num| num % 2 == 0)
-        .map(|&num| num * num)
-        .sum();
+    let slice1 = &v[..];
+    // Out of bounds will cause a panic
+    // You must use `v.len` here
+    let slice2 = &v[0..v.len()];
 
-    println!("Result without combinators: {}", result);
+    assert_eq!(slice1, slice2);
 
-    let a = &numbers;
-    let b = &a;
+    // Slices are read only
+    // Note: slice and &Vec are different
+    let vec_ref: &mut Vec<i32> = &mut v;
+    (*vec_ref).push(4);
+    let slice3 = &mut v[0..3];
 
-    println!("{:?}", &a)
+    println!("{:?}", slice3);
+
+    assert_eq!(slice3, &[1, 2, 3, 4]);
+
+    println!("Success!");
 }
