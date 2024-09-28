@@ -1,23 +1,13 @@
-// FIX the errors
+use std::{cell::RefCell, rc::Rc};
+
 fn main() {
-    let mut v = vec![1, 2, 3];
+    // Rc pointer lets multiple immutable ownership
+    // While RefCell pointer at the same time allows us to mutate the internal value.
+    // So with combination of both, you can have one data that will havemultiple owners and
+    // can change its data as well
+    let a = Rc::new(RefCell::new(String::from("abc")));
+    let b = Rc::clone(&a);
 
-    let slice1 = &v[..];
-    // Out of bounds will cause a panic
-    // You must use `v.len` here
-    let slice2 = &v[0..v.len()];
-
-    assert_eq!(slice1, slice2);
-
-    // Slices are read only
-    // Note: slice and &Vec are different
-    let vec_ref: &mut Vec<i32> = &mut v;
-    (*vec_ref).push(4);
-    let slice3 = &mut v[0..3];
-
-    println!("{:?}", slice3);
-
-    assert_eq!(slice3, &[1, 2, 3, 4]);
-
-    println!("Success!");
+    *b.borrow_mut() = String::from("Hello");
+    println!("{:?}", a)
 }
