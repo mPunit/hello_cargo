@@ -1,24 +1,14 @@
 use core::str;
+use std::mem;
 
-//String Slices
 fn main() {
-    let mut s = String::from("this is my first word");
+    let arr: [char; 3] = ['中', '国', '人'];
 
-    let word = return_first_word(&s);
+    let slice = &arr[..];
 
-    println!("{}", word);
+    assert_eq!(std::mem::size_of_val(&arr), 12);
+    assert_eq!(std::mem::size_of_val(slice), 12);
 
-    s.clear();
-}
-
-fn return_first_word(s: &String) -> &str {
-    let b = s.as_bytes();
-
-    for (i, &j) in b.iter().enumerate() {
-        if j == b' ' {
-            return &s[..i];
-        }
-    }
-
-    &s[..]
+    assert_eq!(std::mem::size_of_val(&slice), 16);
+    println!("Success!");
 }
