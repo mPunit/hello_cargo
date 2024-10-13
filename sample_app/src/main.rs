@@ -1,14 +1,54 @@
-use core::str;
-use std::mem;
+use core::{hash, str};
+use std::{collections::HashMap, mem};
+
+use std::collections::hash_map;
+
+#[derive(Debug)]
+struct User<'a> {
+    active: bool,
+    username: &'a str,
+    email: &'a str,
+    sign_in_count: u64,
+}
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
 
 fn main() {
-    let arr: [char; 3] = ['中', '国', '人'];
+    let user1 = User {
+        active: true,
+        username: "someusername123",
+        email: "someone@example.com",
+        sign_in_count: 5,
+    };
 
-    let slice = &arr[..];
+    dbg!(&user1);
+    println!("{:?}", user1);
 
-    assert_eq!(std::mem::size_of_val(&arr), 12);
-    assert_eq!(std::mem::size_of_val(slice), 12);
+    let a = [Message::Move { x: 1, y: 2 }, Message::Quit];
 
-    assert_eq!(std::mem::size_of_val(&slice), 16);
-    println!("Success!");
+    for b in "Зд".bytes() {
+        println!("{b}");
+    }
+
+    let mut hashes = HashMap::new();
+
+    hashes.insert(1, "foo");
+    hashes.insert(2, "bar");
+
+    for a in hashes.keys() {
+        println!("{a}");
+    }
+
+    println!("{:?}", hashes);
+
+    let v = vec!["sdf", "sdfsf", "SDfsdF"];
+
+    match v.get(2) {
+        Some(n) => println!("{n}"),
+        None => println!("Failure"),
+    }
 }
