@@ -1,54 +1,27 @@
-use core::{hash, str};
-use std::{collections::HashMap, mem};
-
-use std::collections::hash_map;
-
-#[derive(Debug)]
-struct User<'a> {
-    active: bool,
-    username: &'a str,
-    email: &'a str,
-    sign_in_count: u64,
-}
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-    ChangeColor(i32, i32, i32),
-}
-
 fn main() {
-    let user1 = User {
-        active: true,
-        username: "someusername123",
-        email: "someone@example.com",
-        sign_in_count: 5,
-    };
+    let mut strings = vec![
+        String::from("first"),
+        String::from("apple"),
+        String::from("ball"),
+    ];
 
-    dbg!(&user1);
-    println!("{:?}", user1);
+    let vowels = vec!['a', 'e', 'i', 'o', 'u'];
 
-    let a = [Message::Move { x: 1, y: 2 }, Message::Quit];
-
-    for b in "Зд".bytes() {
-        println!("{b}");
+    for word in &mut strings {
+        let first_letter = word.chars().next().unwrap();
+        if (vowels.contains(&first_letter.to_ascii_lowercase())) {
+            word.push_str("-hay");
+        } else {
+            let mut characters = word.chars();
+            let _first_letter = characters.next();
+            let remaining: String = characters.collect();
+            word.clear();
+            word.push_str(&remaining);
+            word.push('-');
+            word.push(first_letter);
+            word.push_str("ay");
+        }
     }
 
-    let mut hashes = HashMap::new();
-
-    hashes.insert(1, "foo");
-    hashes.insert(2, "bar");
-
-    for a in hashes.keys() {
-        println!("{a}");
-    }
-
-    println!("{:?}", hashes);
-
-    let v = vec!["sdf", "sdfsf", "SDfsdF"];
-
-    match v.get(2) {
-        Some(n) => println!("{n}"),
-        None => println!("Failure"),
-    }
+    println!("{strings:?}")
 }
